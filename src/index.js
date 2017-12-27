@@ -1,4 +1,5 @@
 import React from 'react';
+import 'antd/dist/antd.css';
 import { Button } from 'antd';
 import ReactDom from 'react-dom';
 import {
