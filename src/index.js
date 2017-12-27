@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 import ReactDom from 'react-dom';
 import {
 	BrowserRouter as Router,
@@ -15,9 +16,10 @@ ReactDom.render(
 		<Router>
 			<div>
 				<ul>
-					<li><Link to='/'>Home</Link></li>
-					<li><Link to='/about'>About</Link></li>
-					<li><Link to='/topics'>Topics</Link></li>
+					<li><Button type="primary"><Link to='/'>Home</Link></Button></li>
+					<li><Link to='/about'> About </Link></li>
+					<li><Link to='/topics'> Topics </Link> </li>
+					<li><Button type="primary"> MAIN_MENU </Button></li>
 				</ul>
 				<hr/>
 				<Route exact path="/" component={Home}/>
