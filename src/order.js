@@ -10,13 +10,19 @@ var layout = [
   {i: 'c', x: 4, y: 0, w: 1, h: 2}
 ];
 
+var styles = {
+	width: 90,
+	height: 90,
+	color: "red",
+	backgroundColor: "black"
+};
 
 export default () => (
 	<div>
 		<ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
-	        <div key="a">a</div>
-	        <div key="b">b</div>
-	        <div key="c">c</div>
+	        <div key="a"><button style = {styles}> A </button></div>
+	        <div key="b"><button style = {styles}> B </button></div>
+	        <div key="c"><button style = {styles}> C </button></div>
 	    </ReactGridLayout>
 	</div>
 );
