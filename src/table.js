@@ -2,6 +2,8 @@ import React from 'react';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import Keyboard from './keyboard';
+import { Button,Col } from 'antd';
+import 'antd/dist/antd.css';
 
 class Table extends React.Component {
 
@@ -23,7 +25,6 @@ class Table extends React.Component {
 		this.setState({ activate: false });
 	}
 
-
 	render() {
 		const button_styles = {
 			width: this.props.width,
@@ -31,15 +32,23 @@ class Table extends React.Component {
 			color: this.props.color,
 			backgroundColor: this.props.backgroundColor
 		};
-
+		const styles = {
+			width: 50,
+			height: 50,
+			color: "black",
+			backgroundColor: "red"
+		};
 		return (
 			<div>
 				<button onClick={this.handleOpenModal} style={button_styles}>open!</button>
 				<ReactModal
 					isOpen={this.state.activate}
 				>
-					<button onClick={this.handleCloseModal}>Close</button>
+					<Col offset={13}>
+					<Button style = {styles} type = "danger" onClick={this.handleCloseModal}>X</Button>
+					</Col>
 					<Keyboard />
+
 				</ReactModal>
 			</div>
 		);

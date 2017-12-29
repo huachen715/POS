@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Input, Row, Col } from 'antd';
+import 'antd/dist/antd.css';
 
 class Keyboard extends React.Component {
 	constructor(props) {
@@ -44,47 +45,44 @@ class Keyboard extends React.Component {
 		const style = {
 			width: 100,
 			height: 100,
-			backgroundColor: 'CornflowerBlue',
-			color: 'white',
-			font_size: 500
+			margin: 3
 		};
 
 		const input_style = {
 			// font-size: 'medium',
-			width: 300,
+			width: 320,
 			height: 50
-		}
-
+		};
 		return (
 			<div>
 				<Row>
-					<Col offset={7}>
+					<Col offset={8}>
 						<form onSubmit={this.handleSubmit}>
 							<Input style={input_style} type="text" onChange={this.handleChange} value={this.state.displayValue} />
 						</form>
 					</Col>
 				</Row>
 				<Row>
-					<Col offset={7}>
+					<Col offset={8}>
 						<Row>
-							<button onClick={() => this.input('1')} style={style}>1</button>
-							<button onClick={() => this.input('2')} style={style}>2</button>
-							<button onClick={() => this.input('3')} style={style}>3</button>
+							<Button type="primary" onClick={() => this.input('1')} style={style}>1</Button>
+							<Button type="primary" onClick={() => this.input('2')} style={style}>2</Button>
+							<Button type="primary" onClick={() => this.input('3')} style={style}>3</Button>
 						</Row>
 						<Row>
-							<button onClick={() => this.input('4')} style={style}>4</button>
-							<button onClick={() => this.input('5')} style={style}>5</button>
-							<button onClick={() => this.input('6')} style={style}>6</button>
+							<Button type="primary" onClick={() => this.input('4')} style={style}>4</Button>
+							<Button type="primary" onClick={() => this.input('5')} style={style}>5</Button>
+							<Button type="primary" onClick={() => this.input('6')} style={style}>6</Button>
 						</Row>
 						<Row>
-							<button onClick={() => this.input('7')} style={style}>7</button>
-							<button onClick={() => this.input('8')} style={style}>8</button>
-							<button onClick={() => this.input('9')} style={style}>9</button>
+							<Button type="primary" onClick={() => this.input('7')} style={style}>7</Button>
+							<Button type="primary" onClick={() => this.input('8')} style={style}>8</Button>
+							<Button type="primary" onClick={() => this.input('9')} style={style}>9</Button>
 						</Row>
 						<Row>
-							<button onClick={this.clear} style={style}>Clear</button>
-							<button onClick={() => this.input('0')} style={style}>0</button>
-							<button onClick={this.handleSubmit} style={style}>Enter</button>
+							<Button type="primary" onClick={this.clear} style={style}>Clear</Button>
+							<Button type="primary" onClick={() => this.input('0')} style={style}>0</Button>
+							<Button type="primary" onClick={this.handleSubmit} style={style}>Enter</Button>
 						</Row>
 					</Col>
 				</Row>
