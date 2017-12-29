@@ -33,12 +33,9 @@
   },
   "dependencies": {
     "antd": "^3.0.3",
-    "keymaster": "^1.6.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-grid-layout": "^0.16.2",
     "react-modal": "^3.1.10",
-    "react-popup": "^0.9.1",
     "react-router-dom": "^4.2.2"
   }
 }
