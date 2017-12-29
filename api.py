@@ -19,6 +19,7 @@ class test(Resource):
 	def get(self, id):
 		result = {'test': id}
 		return jsonify(result)
+		
 
 api.add_resource(test1, '/test1')
 api.add_resource(test2, '/test2')
