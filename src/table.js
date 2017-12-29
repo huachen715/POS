@@ -25,7 +25,7 @@ class Table extends React.Component {
 
 
 	render() {
-		let styles = {
+		const button_styles = {
 			width: this.props.width,
 			height: this.props.height,
 			color: this.props.color,
@@ -34,7 +34,7 @@ class Table extends React.Component {
 
 		return (
 			<div>
-				<button onClick={this.handleOpenModal} style={styles}>open!</button>
+				<button onClick={this.handleOpenModal} style={button_styles}>open!</button>
 				<ReactModal
 					isOpen={this.state.activate}
 				>
