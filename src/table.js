@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import Keyboard from './keyboard';
-import { Button,Col } from 'antd';
+import { Modal, Button, Col } from 'antd';
 import 'antd/dist/antd.css';
 
 class Table extends React.Component {
@@ -41,15 +40,14 @@ class Table extends React.Component {
 		return (
 			<div>
 				<button onClick={this.handleOpenModal} style={button_styles}>open!</button>
-				<ReactModal
-					isOpen={this.state.activate}
+				<Modal
+					title="Please enter your password."
+					visible={this.state.activate}
+					onCancel={this.handleCloseModal}
+					footer={null}
 				>
-					<Col offset={13}>
-					<Button style = {styles} type = "danger" onClick={this.handleCloseModal}>X</Button>
-					</Col>
 					<Keyboard />
-
-				</ReactModal>
+				</Modal>
 			</div>
 		);
 	}

@@ -56,14 +56,14 @@ class Keyboard extends React.Component {
 		return (
 			<div>
 				<Row>
-					<Col offset={8}>
+					<Col offset={4}>
 						<form onSubmit={this.handleSubmit}>
 							<Input style={input_style} type="text" onChange={this.handleChange} value={this.state.displayValue} />
 						</form>
 					</Col>
 				</Row>
 				<Row>
-					<Col offset={8}>
+					<Col offset={4}>
 						<Row>
 							<Button type="primary" onClick={() => this.input('1')} style={style}>1</Button>
 							<Button type="primary" onClick={() => this.input('2')} style={style}>2</Button>
