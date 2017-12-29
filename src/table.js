@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import Keyboard from './keyboard';
 
 class Table extends React.Component {
 
@@ -24,34 +25,33 @@ class Table extends React.Component {
 
 
 	render() {
-		// let styles = {
-		// 	width: this.props.width,
-		// 	height: this.props.height,
-		// 	color: this.props.color,
-		// 	backgroundColor: this.props.backgroundColor
-		// };
+		let styles = {
+			width: this.props.width,
+			height: this.props.height,
+			color: this.props.color,
+			backgroundColor: this.props.backgroundColor
+		};
 
 		return (
 			<div>
-				<button onClick={this.handleOpenModal}>open!</button>
+				<button onClick={this.handleOpenModal} style={styles}>open!</button>
 				<ReactModal
 					isOpen={this.state.activate}
-					contentLabel="Minimal Modal Example"
 				>
 					<button onClick={this.handleCloseModal}>Close</button>
-					<p>I'm opened!</p>
+					<Keyboard />
 				</ReactModal>
 			</div>
 		);
 	}
 }
 
-// Table.propTypes = {
-// 	name: PropTypes.string.isRequired,
-// 	width: PropTypes.integer.isRequired,
-// 	height: PropTypes.integer.isRequired,
-// 	color: PropTypes.string.isRequired,
-// 	backgroundColor: PropTypes.string.isRequired,
-// }
+Table.propTypes = {
+	name: PropTypes.string.isRequired,
+	width: PropTypes.number.isRequired,
+	height: PropTypes.number.isRequired,
+	color: PropTypes.string.isRequired,
+	backgroundColor: PropTypes.string.isRequired,
+}
 
 export default Table;
