@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   devtool: 'cheap-module-source-map',
   context: path.resolve(__dirname, 'src'),
-  entry: path.join(__dirname, 'src', 'index.js'),
+  entry: path.join(__dirname, 'src', 'index.jsx'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/dist/',
@@ -11,6 +11,7 @@ module.exports = {
   },
   resolve: {
     modules: [path.resolve(__dirname), 'node_modules'],
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
@@ -36,7 +37,7 @@ module.exports = {
 	    loader: 'style-loader!css-loader'
 	  },
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
