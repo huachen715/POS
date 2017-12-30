@@ -1,18 +1,22 @@
 import React from "react";
-import { Button, Input, Row, Col } from 'antd';
+import PropTypes from 'prop-types';
+import { Alert, Button, Input, Row, Col } from 'antd';
+import Menu from './menu';
 import 'antd/dist/antd.css';
 
-class Keyboard extends React.Component {
+class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			displayValue: ""
+			displayValue: "",
+			openMenu: false
 		};
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.input = this.input.bind(this);
 		this.clear = this.clear.bind(this);
+		this.openMenu = this.openMenu.bind(this);
 	}
 
 	input(i) {
@@ -36,9 +40,20 @@ class Keyboard extends React.Component {
 			body: JSON.stringify(message),
 			credentials: 'same-origin',
 		}).then((response) => {
-			if (!response.ok) alert("wrong password!");
-			else alert("correct password!");
+			this.setState({ displayValue: "" });
+			if (!response.ok){
+				alert("wrong password!");
+			}
+			else{
+				this.props.handler();
+				this.openMenu();
+			}
 		});
+	}
+
+	openMenu() {
+		this.setState({ openMenu: true });
+		this.setState({ openMenu: false });
 	}
 
 	render() {
@@ -86,9 +101,14 @@ class Keyboard extends React.Component {
 						</Row>
 					</Col>
 				</Row>
+				<Menu isOpen={this.state.openMenu}/>
 			</div>
 		);
 	}
 }
 
-export default Keyboard;
+Login.propTypes = {
+	handler: PropTypes.func.isRequired
+}
+
+export default Login;

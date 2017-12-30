@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Keyboard from './keyboard';
+import Login from './login';
 import { Modal, Button, Col } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -14,6 +14,7 @@ class Table extends React.Component {
 
 		this.handleOpenModal = this.handleOpenModal.bind(this);
 		this.handleCloseModal = this.handleCloseModal.bind(this);
+		this.handler = this.handler.bind(this);
 	}
 
 	handleOpenModal () {
@@ -22,6 +23,11 @@ class Table extends React.Component {
 
 	handleCloseModal () {
 		this.setState({ activate: false });
+	}
+
+	handler(e) {
+		// e.preventDefault();
+		this.setState( {activate: false });
 	}
 
 	render() {
@@ -46,7 +52,7 @@ class Table extends React.Component {
 					onCancel={this.handleCloseModal}
 					footer={null}
 				>
-					<Keyboard />
+					<Login handler={this.handler} />
 				</Modal>
 			</div>
 		);

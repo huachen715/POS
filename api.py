@@ -28,12 +28,20 @@ class validate(Resource):
 			return "", 200, {'Access-Control-Allow-Origin': '*'}
 		else:
 			return "", 401, {'Access-Control-Allow-Origin': '*'}
-		
+
+class menu(Resource):
+	def get(self):
+		# this is fake menu, change to database later
+		# data = {}
+		catalog= ['entree', 'appetizer', 'drink', 'sushi']
+		# data['catalog'] = catalog
+		return {'catalog': catalog}, 200, {'Access-Control-Allow-Origin': '*'}
 
 api.add_resource(test1, '/test1')
 api.add_resource(test2, '/test2')
 api.add_resource(test, '/test/<id>')
 api.add_resource(validate, '/validate')
+api.add_resource(menu, '/menu')
 
 if __name__ == '__main__':
 	app.run(port=5002)
