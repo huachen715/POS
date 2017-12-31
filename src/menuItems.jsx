@@ -4,9 +4,11 @@ import { Row, Button } from 'antd';
 import 'antd/dist/antd.css';
 
 const style = {
-			width: 100,
-			height: 100,
-			margin: 3
+	whiteSpace: "pre-line",
+	fontSize: 28,
+	width: 150,
+	height: 100,
+	margin: 4
 };
 
 class MenuItems extends React.Component {
