@@ -11,6 +11,6 @@ CREATE TABLE menu(
 	name VARCHAR(20) NOT NULL,
 	catalog VARCHAR(20) NOT NULL,
 	price REAL NOT NULL,
-	PRIMARY KEY(name + catalog)
+	PRIMARY KEY(name, catalog)
 );
 
