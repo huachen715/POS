@@ -42,8 +42,14 @@ class test(Resource):
 class validate(Resource):
 	def post(self):
 		request_data = request.get_json(force=True)
-		print request_data['password']
-		if request_data['password'] == '1111':
+		conn = db_connect.connect()
+		query = conn.execute("select distinct password from employee_info")
+		result = query.cursor.fetchall()
+		final_res = []
+		for element in result:
+			final_res.append(element[0])
+		print final_res
+		if request_data['password'] in final_res:
 			return "", 200, {'Access-Control-Allow-Origin': '*'}
 		else:
 			return "", 401, {'Access-Control-Allow-Origin': '*'}
