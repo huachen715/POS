@@ -36,8 +36,8 @@ class MenuItems extends React.Component {
 	render() {
 		let result = [];
 		for (let key in this.state.items) {
-			console.log(key);
-			result.push(<Button type='primary' style={style}>{key}</Button>);
+			// let item = {name: key, price: this.state.items[key]}
+			result.push(<Button type='primary' style={style} onClick={() => this.props.addItem({name: key, price: this.state.items[key]})}>{key}</Button>);
 		}
 		// console.log(result);
 		return (
@@ -47,7 +47,8 @@ class MenuItems extends React.Component {
 }
 
 MenuItems.propTypes = {
-	url: PropTypes.string.isRequired
+	url: PropTypes.string.isRequired,
+	addItem: PropTypes.func.isRequired
 }
 
 export default MenuItems;
