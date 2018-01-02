@@ -9,7 +9,7 @@ const style = {
 	whiteSpace: "pre-line",
 	fontSize: 14,
 	width: 120,
-	height: 120,
+	height: 100,
 	margin: 2
 };
 

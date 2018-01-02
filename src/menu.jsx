@@ -76,9 +76,10 @@ class Menu extends React.Component {
 					<Router>
 					    <div style={{ display: 'flex' }}>
 					      <div style={{
-					        padding: '10px',
-					        width: '40%',
-					        background: '#f0f0f0'
+					        padding: '5px',
+					        width: '20%',
+					        background: '#f0f0f0',
+					        color: 'white'
 					      }}>
 					        <ul style={{ listStyleType: 'none', padding: 0 }}>
 					          {routes.map((item) => (<li><Link to={item.path}>{item.name}</Link></li>)
