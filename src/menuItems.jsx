@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Button } from 'antd';
+import { Layout, Row, Button } from 'antd';
 import 'antd/dist/antd.css';
+import OrderDisplay from './orderDisplay';
 
 const style = {
 	verticalAlign: 'top',
@@ -12,6 +13,11 @@ const style = {
 	height: 100,
 	margin: 2
 };
+
+const content_style = {
+	backgroundColor: 'white'
+}
+const { Content, Sider } = Layout;
 
 class MenuItems extends React.Component {
 	constructor(props) {
@@ -41,14 +47,26 @@ class MenuItems extends React.Component {
 		}
 		// console.log(result);
 		return (
-			<div><Row>{result}</Row></div>
+			<div>
+				<Layout>
+					<Content style={content_style}>
+					<Row>{result}</Row>
+					</Content>
+					<Sider width={500} style={content_style}>
+						<OrderDisplay item={this.props.ordered_items} />
+						<Button type="primary" onClick={this.props.handleCancel}>Cancel items</Button>
+					</Sider>
+				</Layout>
+			</div>
 		);
 	}
 }
 
 MenuItems.propTypes = {
+	ordered_items: PropTypes.array.isRequired,
 	url: PropTypes.string.isRequired,
-	addItem: PropTypes.func.isRequired
+	addItem: PropTypes.func.isRequired,
+	handleCancel: PropTypes.func.isRequired
 }
 
 export default MenuItems;

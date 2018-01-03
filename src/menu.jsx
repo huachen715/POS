@@ -23,7 +23,7 @@ class Menu extends React.Component {
 			catalog: [],
 			ordered_items: []
 		};
-		//this.handleCancel = this.handleCancel.bind(this);
+		this.handleCancel = this.handleCancel.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.addItem = this.addItem.bind(this);
 	}
@@ -50,7 +50,6 @@ class Menu extends React.Component {
 
 	addItem(item) {
 		this.setState({ ordered_items: this.state.ordered_items.concat(item) });
-		// console.log(item);
 	}
 
 	handleCancel = () => {
@@ -63,7 +62,8 @@ class Menu extends React.Component {
 		const routes = this.state.catalog.map((item) => 
 			({path: '/'+item, 
 			  name: item,
-			  main: () => (<MenuItems addItem={this.addItem} url={`http://localhost:5002/menu/${item}`}/>)
+			  main: () => (<MenuItems ordered_items={this.state.ordered_items} handleCancel= {this.handleCancel} 
+			  									addItem={this.addItem} url={`http://localhost:5002/menu/${item}`}/>)
 			})
 		);
 
@@ -84,20 +84,16 @@ class Menu extends React.Component {
 				>
 				<Button onClick={this.handleClose}>X</Button>
 					<Layout>
-						
-							<Router>
-								
-							    <div style={{ display: 'flex'}}>
-
+							<Router>	
+							    <div style={{ display: 'flex', backgroundColor: 'white'}}>
 							     <Sider>
 								        <SideBar theme="dark" mode="inline">
 								          {routes.map((item) => (<SideBar.Item><Link to={item.path}>{item.name}</Link></SideBar.Item>)
 								          )}
-								        </SideBar>
-								      
+								        </SideBar>	      
 							    </Sider>
 							    <Content>
-								      <div style={{ flex: 1, padding: '10px', width: 550 }}>
+								      <div style={{ width: 1100 }}>
 								        {routes.map((route, index) => (
 								          // Render more <Route>s with the same paths as
 								          // above, but different components this time.
@@ -112,11 +108,6 @@ class Menu extends React.Component {
 							      </Content>
 							    </div>
 							</Router>
-					
-						<Sider width={500} style={side_style}>
-							<OrderDisplay item={this.state.ordered_items} />
-							<Button type="primary" onClick={this.handleCancel}>Cancel items</Button>
-						</Sider>
 					</Layout>
 				</Modal>
 			</div>

@@ -26,7 +26,7 @@ class OrderDisplay extends React.Component {
 		  dataIndex: 'price',
 		}, {
 		   title: 'Action',
-		   dataIndex: 'action',
+		   dataIndex: 'action' ,
 		}];
 
 		// const data = [{
