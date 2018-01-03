@@ -29,15 +29,15 @@ class OrderDisplay extends React.Component {
 		   dataIndex: 'action',
 		}];
 
-		const data = [{
-			name: "test1",
-			price: "1",
-			action: <button>test1</button>
-		}]
+		// const data = [{
+		// 	name: "test1",
+		// 	price: "1",
+		// 	action: <button>test1</button>
+		// }]
 
 		return (
 			<div>
-				 <Table columns={columns} dataSource={data} />
+				 <Table columns={columns} dataSource={this.state.item} />
 			</div>
 		)
 	}

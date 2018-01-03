@@ -23,10 +23,9 @@ class Menu extends React.Component {
 			catalog: [],
 			ordered_items: []
 		};
-		// this.handleCancel = this.handleCancel.bind(this);
+		//this.handleCancel = this.handleCancel.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.addItem = this.addItem.bind(this);
-		
 	}
 
 	componentDidMount() {
@@ -60,7 +59,6 @@ class Menu extends React.Component {
 	  });
 	  console.log(this.state.ordered_items);
 	}
-
 	render() {
 		const routes = this.state.catalog.map((item) => 
 			({path: '/'+item, 
@@ -71,11 +69,9 @@ class Menu extends React.Component {
 
 		const side_style = {
 			backgroundColor: 'white',
-		}
-
-		const sideBar_style = {
-			theme: 'dark',
-			mode: 'inline'
+			position: 'absolute',
+			top: 50,
+			right: 21
 		}
 		// console.log(routes);
 
@@ -91,17 +87,17 @@ class Menu extends React.Component {
 						
 							<Router>
 								
-							    <div style={{ display: 'flex', backgroundColor: 'white' }}>
+							    <div style={{ display: 'flex'}}>
 
-							     <Sider style = {sideBar_style}>
-								        <SideBar style={sideBar_style}>
+							     <Sider>
+								        <SideBar theme="dark" mode="inline">
 								          {routes.map((item) => (<SideBar.Item><Link to={item.path}>{item.name}</Link></SideBar.Item>)
 								          )}
 								        </SideBar>
 								      
 							    </Sider>
 							    <Content>
-								      <div style={{ flex: 1, padding: '10px' }}>
+								      <div style={{ flex: 1, padding: '10px', width: 550 }}>
 								        {routes.map((route, index) => (
 								          // Render more <Route>s with the same paths as
 								          // above, but different components this time.
