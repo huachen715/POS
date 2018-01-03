@@ -20,12 +20,9 @@ class Menu extends React.Component {
 		super(props);
 		this.state = {
 			isOpen: false,
-			catalog: [],
-			ordered_items: []
+			catalog: []
 		};
-		this.handleCancel = this.handleCancel.bind(this);
 		this.handleClose = this.handleClose.bind(this);
-		this.addItem = this.addItem.bind(this);
 	}
 
 	componentDidMount() {
@@ -48,22 +45,11 @@ class Menu extends React.Component {
 		if(nextProps.isOpen) this.setState({ isOpen: nextProps.isOpen });
 	}
 
-	addItem(item) {
-		this.setState({ ordered_items: this.state.ordered_items.concat(item) });
-	}
-
-	handleCancel = () => {
-	  this.setState({
-	    ordered_items: []
-	  });
-	  console.log(this.state.ordered_items);
-	}
 	render() {
 		const routes = this.state.catalog.map((item) => 
 			({path: '/'+item, 
 			  name: item,
-			  main: () => (<MenuItems ordered_items={this.state.ordered_items} handleCancel= {this.handleCancel} 
-			  									addItem={this.addItem} url={`http://localhost:5002/menu/${item}`}/>)
+			  main: () => (<MenuItems url={`http://localhost:5002/menu/${item}`}/>)
 			})
 		);
 

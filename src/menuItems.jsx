@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Layout, Row, Button } from 'antd';
+import { Table, Layout, Row, Button } from 'antd';
 import 'antd/dist/antd.css';
-import OrderDisplay from './orderDisplay';
 
 const style = {
 	verticalAlign: 'top',
@@ -23,8 +22,11 @@ class MenuItems extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			items: {}
+			items: {},
+			ordered_items: []
 		};
+		this.addItem = this.addItem.bind(this);
+		this.cancelAll = this.cancelAll.bind(this);
 	}
 
 	componentDidMount() {
@@ -39,12 +41,32 @@ class MenuItems extends React.Component {
 		.catch(error => console.log(error));
 	}
 
+	addItem(item) {
+		this.setState({ ordered_items: this.state.ordered_items.concat(item) });
+	}
+
+	cancelAll() {
+		this.setState({ ordered_items: [] });
+	}
+
 	render() {
 		let result = [];
 		for (let key in this.state.items) {
 			// let item = {name: key, price: this.state.items[key]}
-			result.push(<Button type='primary' style={style} onClick={() => this.props.addItem({name: key, price: this.state.items[key]})}>{key}</Button>);
+			result.push(<Button type='primary' style={style} onClick={() => this.addItem({name: key, price: this.state.items[key]})}>{key}</Button>);
 		}
+
+		const columns = [{
+		  title: 'Name',
+		  dataIndex: 'name',
+		}, {
+		  title: 'Price',
+		  dataIndex: 'price',
+		}, {
+		   title: 'Action',
+		   dataIndex: 'action' ,
+		}];
+
 		// console.log(result);
 		return (
 			<div>
@@ -53,8 +75,8 @@ class MenuItems extends React.Component {
 					<Row>{result}</Row>
 					</Content>
 					<Sider width={500} style={content_style}>
-						<OrderDisplay item={this.props.ordered_items} />
-						<Button type="primary" onClick={this.props.handleCancel}>Cancel items</Button>
+						<Table columns={columns} dataSource={this.state.ordered_items} />
+						<Button type="primary" onClick={this.cancelAll}>Cancel All</Button>
 					</Sider>
 				</Layout>
 			</div>
@@ -63,10 +85,7 @@ class MenuItems extends React.Component {
 }
 
 MenuItems.propTypes = {
-	ordered_items: PropTypes.array.isRequired,
-	url: PropTypes.string.isRequired,
-	addItem: PropTypes.func.isRequired,
-	handleCancel: PropTypes.func.isRequired
+	url: PropTypes.string.isRequired
 }
 
 export default MenuItems;
