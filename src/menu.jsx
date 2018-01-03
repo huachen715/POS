@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Layout, Button, Row, Col } from 'antd';
+import { Layout, Button, Row, Col, Menu as SideBar} from 'antd';
 import Modal from 'react-modal';
 import 'antd/dist/antd.css';
 import {
@@ -8,6 +8,9 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+const { SubMenu } = SideBar;
+
+
 const { Content, Sider } = Layout;
 import MenuItems from './menuItems';
 import OrderDisplay from './orderDisplay';
@@ -58,9 +61,13 @@ class Menu extends React.Component {
 		);
 
 		const side_style = {
-			backgroundColor: 'white'
+			backgroundColor: 'white',
 		}
 
+		const sideBar_style = {
+			theme: 'dark',
+			mode: 'inline'
+		}
 		// console.log(routes);
 
 		// this.setState({ isOpen: this.props.isOpen })
@@ -70,37 +77,37 @@ class Menu extends React.Component {
 					title="Menu"
 					isOpen={this.state.isOpen}
 				>
+				<Button onClick={this.handleClose}>X</Button>
 					<Layout>
-						<Content>
+						
 							<Router>
-							    <div style={{ display: 'flex' }}>
-							      <div style={{
-							        padding: '5px',
-							        width: '20%',
-							        background: '#f0f0f0',
-							        color: 'white'
-							      }}>
-							        <ul style={{ listStyleType: 'none', padding: 0 }}>
-							          {routes.map((item) => (<li><Link to={item.path}>{item.name}</Link></li>)
-							          )}
-							        </ul>
-							      </div>
+								
+							    <div style={{ display: 'flex', backgroundColor: 'white' }}>
 
-							      <div style={{ flex: 1, padding: '10px' }}>
-							        {routes.map((route, index) => (
-							          // Render more <Route>s with the same paths as
-							          // above, but different components this time.
-							          <Route
-							            key={index}
-							            path={route.path}
-							            exact={route.exact}
-							            component={route.main}
-							          />
-							        ))}
-							      </div>
+							     <Sider style = {sideBar_style}>
+								        <SideBar style={sideBar_style}>
+								          {routes.map((item) => (<SideBar.Item><Link to={item.path}>{item.name}</Link></SideBar.Item>)
+								          )}
+								        </SideBar>
+								      
+							    </Sider>
+							    <Content>
+								      <div style={{ flex: 1, padding: '10px' }}>
+								        {routes.map((route, index) => (
+								          // Render more <Route>s with the same paths as
+								          // above, but different components this time.
+								          <Route
+								            key={index}
+								            path={route.path}
+								            exact={route.exact}
+								            component={route.main}
+								          />
+								        ))}
+								      </div>
+							      </Content>
 							    </div>
 							</Router>
-						</Content>
+					
 						<Sider width={500} style={side_style}>
 							<OrderDisplay item={this.state.ordered_items} />
 						</Sider>
