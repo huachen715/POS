@@ -68,6 +68,7 @@ class Login extends React.Component {
 			width: 320,
 			height: 50
 		};
+
 		return (
 			<div>
 				<Row>

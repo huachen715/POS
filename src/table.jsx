@@ -32,11 +32,11 @@ class Table extends React.Component {
 
 	render() {
 		const button_styles = {
-			width: this.props.width,
-			height: this.props.height,
-			color: this.props.color,
-			backgroundColor: this.props.backgroundColor
+			width: 100,
+			height: 100,
+			margin: 3
 		};
+
 		const styles = {
 			width: 50,
 			height: 50,
@@ -45,7 +45,7 @@ class Table extends React.Component {
 		};
 		return (
 			<div>
-				<button onClick={this.handleOpenModal} style={button_styles}>open!</button>
+				<Button type="primary" onClick={this.handleOpenModal} icon="laptop" style={button_styles}>Table 1</Button>
 				<Modal
 					title="Please enter your password."
 					visible={this.state.activate}

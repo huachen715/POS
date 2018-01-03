@@ -23,8 +23,10 @@ class Menu extends React.Component {
 			catalog: [],
 			ordered_items: []
 		};
+		// this.handleCancel = this.handleCancel.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.addItem = this.addItem.bind(this);
+		
 	}
 
 	componentDidMount() {
@@ -50,6 +52,13 @@ class Menu extends React.Component {
 	addItem(item) {
 		this.setState({ ordered_items: this.state.ordered_items.concat(item) });
 		// console.log(item);
+	}
+
+	handleCancel = () => {
+	  this.setState({
+	    ordered_items: []
+	  });
+	  console.log(this.state.ordered_items);
 	}
 
 	render() {
@@ -110,6 +119,7 @@ class Menu extends React.Component {
 					
 						<Sider width={500} style={side_style}>
 							<OrderDisplay item={this.state.ordered_items} />
+							<Button type="primary" onClick={this.handleCancel}>Cancel items</Button>
 						</Sider>
 					</Layout>
 				</Modal>

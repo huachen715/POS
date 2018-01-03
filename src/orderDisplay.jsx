@@ -5,7 +5,15 @@ import { Table } from 'antd';
 class OrderDisplay extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			item: [],
+		};
+	}
 
+	componentWillReceiveProps(nextProps) {
+	  if (nextProps.item !== this.state.item) {
+	    this.setState({ item: nextProps.item });
+	  }
 	}
 
 	render() {
@@ -16,11 +24,20 @@ class OrderDisplay extends React.Component {
 		}, {
 		  title: 'Price',
 		  dataIndex: 'price',
+		}, {
+		   title: 'Action',
+		   dataIndex: 'action',
 		}];
+
+		const data = [{
+			name: "test1",
+			price: "1",
+			action: <button>test1</button>
+		}]
 
 		return (
 			<div>
-				 <Table columns={columns} dataSource={this.props.item} />
+				 <Table columns={columns} dataSource={data} />
 			</div>
 		)
 	}
