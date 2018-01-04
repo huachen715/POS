@@ -25,9 +25,8 @@ def validate():
 	if request_data['password'] in final_res:
 		# Table is occupied
 		if request_data['table_number'] in login:
-			print '111'
 			# password belongs to server
-			if request_data['password'] == login[request_data['table_number']]:
+			if request_data['password'] == login[request_data['table_number']] or request_data['table_number'] not in order:
 				return "", 200, {'Access-Control-Allow-Origin': '*'}
 			else:
 				return "", 403, {'Access-Control-Allow-Origin': '*'}
@@ -51,6 +50,8 @@ def menu():
 			final_res[element[1]].append({'name': element[0], 'price': element[2]})
 		return jsonify(**final_res), 200, {'Access-Control-Allow-Origin': '*'}
 	else:
+		request_data = request.get_json(force=True)
+		order[request_data['table_number']] = request_data['order']
 		print request.get_json(force=True)
 		return "", 200, {'Access-Control-Allow-Origin': '*'}
 
@@ -58,7 +59,7 @@ def menu():
 def check():
 	request_data = request.get_json(force=True)
 	login.pop(request_data['table_number'])
-	print request_data
+	print request_data['order']
 	return "", 200, {'Access-Control-Allow-Origin': '*'}
 
 
