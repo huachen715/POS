@@ -17,15 +17,10 @@ ReactDom.render(
 		<Router>
 			<div>
 				<ul>
-					<li><Button type="primary"><Link to='/'>Home</Link></Button></li>
 					<li><Link to='/order'> Order </Link></li>
-					<li><Link to='/topics'> Topics </Link> </li>
-					<li><Button type="primary"> MAIN_MENU </Button></li>
 				</ul>
 				<hr/>
-				<Route exact path="/" component={Home}/>
 				<Route path="/order" component={Order}/>
-				<Route path="/topics" component={Topics}/>
 			</div>
 		</Router>
 	</div>
