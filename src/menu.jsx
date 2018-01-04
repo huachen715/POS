@@ -64,11 +64,15 @@ class Menu extends React.Component {
 
 		let routes = [];
 		for (let key in this.state.catalog) {
+			let group = []
+			for(let i = 0; i < this.state.catalog[key].length; ++i) {
+				group.push(<Button type='primary'>{this.state.catalog[key][i].name}</Button>);
+			}
 
 			routes.push({
 				name: key,
 				path: '/'+key,
-				main: () => (this.state.catalog[key].map((item) => (<Button type='primary' style={style}>{item.name}</Button>)) )
+				main: () => <Row>{group}</Row>
 			})
 		}
 
