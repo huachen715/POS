@@ -8,9 +8,7 @@ import {
 	Link
 } from 'react-router-dom';
 
-import Home from './home';
 import Order from './order';
-import Topics from './topics';
 
 ReactDom.render(
 	<div>

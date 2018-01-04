@@ -52,6 +52,7 @@ class Menu extends React.Component {
 	addItem(item) {
 		this.setState({ total: this.state.total + item.price });
 		this.setState({ ordered_items: this.state.ordered_items.concat(item) });
+		console.log(item.key);
 	}
 
 	cancelAll() {
@@ -64,8 +65,13 @@ class Menu extends React.Component {
 		
 		let target = 0;
 		for(let i = 0; i < this.state.ordered_items.length; ++i) {
-			if(index === this.state.ordered_items.key) target = i;
+
+			if(index === this.state.ordered_items[i].key) {
+				target = i;
+				break;
+			}
 		}
+		console.log("target: " + target);
 		this.setState({ total: this.state.total - this.state.ordered_items[target].price });
 		return array.filter(e => e.key !== index);
 	}
@@ -133,10 +139,6 @@ class Menu extends React.Component {
 			})
 		)
 
-
-		// console.log(routes);
-
-		// this.setState({ isOpen: this.props.isOpen })
 		return (
 			<div>
 				<Modal
@@ -156,8 +158,6 @@ class Menu extends React.Component {
 							    <Content>
 								      <div style={{ width: 700 }}>
 								        {routes.map((route, index) => (
-								          // Render more <Route>s with the same paths as
-								          // above, but different components this time.
 								          <Route
 								            key={index}
 								            path={route.path}
@@ -170,10 +170,10 @@ class Menu extends React.Component {
 							    </div>
 							</Router>
 
-							<Sider width={500} style={content_style}>
+							<Sider width={450} style={content_style}>
 								<Table columns={columns} dataSource={table_entry} />
 								<p>Tax: (6%)</p>
-								<p>Total: ${this.state.total}</p>
+								<p>Total: ${(this.state.total * 1.06).toFixed(2)}</p>
 							</Sider>
 					</Layout>
 				</Modal>
