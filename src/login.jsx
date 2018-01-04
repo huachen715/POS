@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { Alert, Button, Input, Row, Col } from 'antd';
+import { message, Button, Input, Row, Col } from 'antd';
 import Menu from './menu';
 import 'antd/dist/antd.css';
 
@@ -31,18 +31,31 @@ class Login extends React.Component {
 		this.setState({ displayValue: "" });
 	}
 
+	wrong_password() {
+		return message.error('Wrong Password!');
+	} 
+
+	occupied() {
+		return message.error('Access Denied!');
+	}
+
 	handleSubmit(event) {
 		event.preventDefault();
-		let message = { password: this.state.displayValue };
-		console.log(message);
+		let message = { 
+			password: this.state.displayValue,
+			table_number: this.props.table_number
+		};
 		fetch("http://localhost:5002/validate", {
 			method: 'POST',
 			body: JSON.stringify(message),
 			credentials: 'same-origin',
 		}).then((response) => {
 			this.setState({ displayValue: "" });
-			if (!response.ok){
-				alert("wrong password!");
+			if (response.status == 401){
+				this.wrong_password();
+			}
+			else if (response.status == 403) {
+				this.occupied();
 			}
 			else{
 				this.props.handler();
