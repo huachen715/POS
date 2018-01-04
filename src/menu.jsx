@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Layout, Button, Row, Col, Menu as SideBar} from 'antd';
+import { Table, Layout, Button, Row, Col, Menu as SideBar} from 'antd';
 import Modal from 'react-modal';
 import 'antd/dist/antd.css';
 import {
@@ -12,16 +12,18 @@ const { SubMenu } = SideBar;
 
 
 const { Content, Sider } = Layout;
-import MenuItems from './menuItems';
 
 class Menu extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			isOpen: false,
-			catalog: {}
+			catalog: {},
+			ordered_items: []
 		};
 		this.handleClose = this.handleClose.bind(this);
+		this.addItem = this.addItem.bind(this);
+		this.cancelAll = this.cancelAll.bind(this);
 	}
 
 	componentDidMount() {
@@ -44,14 +46,15 @@ class Menu extends React.Component {
 		if(nextProps.isOpen) this.setState({ isOpen: nextProps.isOpen });
 	}
 
-	render() {
-		// const routes = this.state.catalog.map((item) => 
-		// 	({path: '/'+item, 
-		// 	  name: item,
-		// 	  main: () => (<MenuItems url={`http://localhost:5002/menu/${item}`}/>)
-		// 	})
-		// );
+	addItem(item) {
+		this.setState({ ordered_items: this.state.ordered_items.concat(item) });
+	}
 
+	cancelAll() {
+		this.setState({ ordered_items: [] });
+	}
+
+	render() {
 		const style = {
 			verticalAlign: 'top',
 			justifyContent: 'center',
@@ -66,7 +69,9 @@ class Menu extends React.Component {
 		for (let key in this.state.catalog) {
 			let group = []
 			for(let i = 0; i < this.state.catalog[key].length; ++i) {
-				group.push(<Button type='primary'>{this.state.catalog[key][i].name}</Button>);
+				let item_name = this.state.catalog[key][i].name;
+				let item_price = this.state.catalog[key][i].price;
+				group.push(<Button type='primary' style={style} onClick={() => this.addItem({name: item_name, price: item_price})}>{item_name}</Button>);
 			}
 
 			routes.push({
@@ -76,15 +81,38 @@ class Menu extends React.Component {
 			})
 		}
 
-
-		console.log(routes);
-
 		const side_style = {
 			backgroundColor: 'white',
 			position: 'absolute',
 			top: 50,
 			right: 21
 		}
+
+
+		const content_style = {
+			backgroundColor: 'white'
+		}
+
+		const columns = [{
+		  title: 'Name',
+		  dataIndex: 'name',
+		}, {
+		  title: 'Price',
+		  dataIndex: 'price',
+		}, {
+		   title: '',
+		   dataIndex: 'action' ,
+		}];
+
+		const table_entry = this.state.ordered_items.map((item) => 
+			({
+				name: item['name'],
+				price: item['price'],
+				action: <Button type='danger'>Delete</Button>
+			})
+		)
+
+
 		// console.log(routes);
 
 		// this.setState({ isOpen: this.props.isOpen })
@@ -105,7 +133,7 @@ class Menu extends React.Component {
 								        </SideBar>	      
 							    </Sider>
 							    <Content>
-								      <div style={{ width: 1100 }}>
+								      <div style={{ width: 700 }}>
 								        {routes.map((route, index) => (
 								          // Render more <Route>s with the same paths as
 								          // above, but different components this time.
@@ -120,6 +148,11 @@ class Menu extends React.Component {
 							      </Content>
 							    </div>
 							</Router>
+
+							<Sider width={500} style={content_style}>
+								<Table columns={columns} dataSource={table_entry} />
+								<Button type="primary" onClick={this.cancelAll}>Cancel All</Button>
+							</Sider>
 					</Layout>
 				</Modal>
 			</div>
