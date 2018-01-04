@@ -19,11 +19,14 @@ class Menu extends React.Component {
 		this.state = {
 			isOpen: false,
 			catalog: {},
-			ordered_items: []
+			ordered_items: [],
+			total: 0.00,
 		};
 		this.handleClose = this.handleClose.bind(this);
 		this.addItem = this.addItem.bind(this);
 		this.cancelAll = this.cancelAll.bind(this);
+		this.remove = this.remove.bind(this);
+		this.cancelOne = this.cancelOne.bind(this);
 	}
 
 	componentDidMount() {
@@ -47,11 +50,28 @@ class Menu extends React.Component {
 	}
 
 	addItem(item) {
+		this.setState({ total: this.state.total + item.price });
 		this.setState({ ordered_items: this.state.ordered_items.concat(item) });
 	}
 
 	cancelAll() {
 		this.setState({ ordered_items: [] });
+	}
+
+	remove(array, index) {
+		// console.log(index);
+		// this.setState({ total: this.state.total - this.state.ordered_items[index].price });
+		
+		let target = 0;
+		for(let i = 0; i < this.state.ordered_items.length; ++i) {
+			if(index === this.state.ordered_items.key) target = i;
+		}
+		this.setState({ total: this.state.total - this.state.ordered_items[target].price });
+		return array.filter(e => e.key !== index);
+	}
+
+	cancelOne(index) {
+		this.setState({ ordered_items: this.remove(this.state.ordered_items, index)});
 	}
 
 	render() {
@@ -71,7 +91,8 @@ class Menu extends React.Component {
 			for(let i = 0; i < this.state.catalog[key].length; ++i) {
 				let item_name = this.state.catalog[key][i].name;
 				let item_price = this.state.catalog[key][i].price;
-				group.push(<Button type='primary' style={style} onClick={() => this.addItem({name: item_name, price: item_price})}>{item_name}</Button>);
+				let item_index = this.state.ordered_items.length;
+				group.push(<Button type='primary' style={style} onClick={() => this.addItem({name: item_name, price: item_price, key: item_index})}>{item_name}</Button>);
 			}
 
 			routes.push({
@@ -108,7 +129,7 @@ class Menu extends React.Component {
 			({
 				name: item['name'],
 				price: item['price'],
-				action: <Button type='danger'>Delete</Button>
+				action: <Button type='danger' onClick={() => this.cancelOne(item['key'])}>Delete</Button>
 			})
 		)
 
@@ -151,7 +172,8 @@ class Menu extends React.Component {
 
 							<Sider width={500} style={content_style}>
 								<Table columns={columns} dataSource={table_entry} />
-								<Button type="primary" onClick={this.cancelAll}>Cancel All</Button>
+								<p>Tax: (6%)</p>
+								<p>Total: ${this.state.total}</p>
 							</Sider>
 					</Layout>
 				</Modal>
