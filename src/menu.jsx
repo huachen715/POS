@@ -13,14 +13,13 @@ const { SubMenu } = SideBar;
 
 const { Content, Sider } = Layout;
 import MenuItems from './menuItems';
-import OrderDisplay from './orderDisplay';
 
 class Menu extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			isOpen: false,
-			catalog: []
+			catalog: {}
 		};
 		this.handleClose = this.handleClose.bind(this);
 	}
@@ -32,7 +31,7 @@ class Menu extends React.Component {
 			return response.json();
 		})
 		.then((data) => {
-			this.setState({ catalog: data['catalog'] });
+			this.setState({ catalog: data });
 		})
 		.catch(error => console.log(error));
 	}
@@ -46,12 +45,35 @@ class Menu extends React.Component {
 	}
 
 	render() {
-		const routes = this.state.catalog.map((item) => 
-			({path: '/'+item, 
-			  name: item,
-			  main: () => (<MenuItems url={`http://localhost:5002/menu/${item}`}/>)
+		// const routes = this.state.catalog.map((item) => 
+		// 	({path: '/'+item, 
+		// 	  name: item,
+		// 	  main: () => (<MenuItems url={`http://localhost:5002/menu/${item}`}/>)
+		// 	})
+		// );
+
+		const style = {
+			verticalAlign: 'top',
+			justifyContent: 'center',
+			whiteSpace: "pre-line",
+			fontSize: 14,
+			width: 120,
+			height: 100,
+			margin: 2
+		};
+
+		let routes = [];
+		for (let key in this.state.catalog) {
+
+			routes.push({
+				name: key,
+				path: '/'+key,
+				main: () => (this.state.catalog[key].map((item) => (<Button type='primary' style={style}>{item.name}</Button>)) )
 			})
-		);
+		}
+
+
+		console.log(routes);
 
 		const side_style = {
 			backgroundColor: 'white',

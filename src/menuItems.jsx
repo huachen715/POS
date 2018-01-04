@@ -63,9 +63,17 @@ class MenuItems extends React.Component {
 		  title: 'Price',
 		  dataIndex: 'price',
 		}, {
-		   title: 'Action',
+		   title: '',
 		   dataIndex: 'action' ,
 		}];
+
+		const table_entry = this.state.ordered_items.map((item) => 
+			({
+				name: item['name'],
+				price: item['price'],
+				action: <Button type='danger'>Delete</Button>
+			})
+		)
 
 		// console.log(result);
 		return (
@@ -75,7 +83,7 @@ class MenuItems extends React.Component {
 					<Row>{result}</Row>
 					</Content>
 					<Sider width={500} style={content_style}>
-						<Table columns={columns} dataSource={this.state.ordered_items} />
+						<Table columns={columns} dataSource={table_entry} />
 						<Button type="primary" onClick={this.cancelAll}>Cancel All</Button>
 					</Sider>
 				</Layout>

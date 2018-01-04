@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, reqparse
 from sqlalchemy import create_engine
 from json import dumps
 from flask.ext.jsonpify import jsonify
+from collections import defaultdict
 import os
 
 app = Flask(__name__)
@@ -57,13 +58,13 @@ class validate(Resource):
 class menu(Resource):
 	def get(self):
 		conn = db_connect.connect()
-		query = conn.execute("select distinct catalog from menu")
+		query = conn.execute("select * from menu")
 		result = query.cursor.fetchall()
-		final_res = []
+		final_res = defaultdict(list)
 		for element in result:
-			final_res.append(element[0])
+			final_res[element[1]].append({'name': element[0], 'price': element[2]})
 		# data['catalog'] = catalog
-		return {'catalog': final_res}, 200, {'Access-Control-Allow-Origin': '*'}
+		return final_res, 200, {'Access-Control-Allow-Origin': '*'}
 
 class menu_item(Resource):
 	def get(self, catalog):
@@ -83,8 +84,6 @@ class menu_item(Resource):
 			final_res[element[0]] = element[1]
 		return final_res, 200, {'Access-Control-Allow-Origin': '*'} 
 
-
-
 api.add_resource(test1, '/test1')
 api.add_resource(test2, '/test2')
 api.add_resource(test, '/test/<id>')
@@ -94,7 +93,7 @@ api.add_resource(menu_item, '/menu/<string:catalog>')
 
 if __name__ == '__main__':
 	# conn = db_connect.connect()
-	# query = conn.execute("select name, price from menu where catalog = ?", 'Katsu')
+	# query = conn.execute("select * from menu")
 	# result = query.cursor.fetchall()
-	# print result
+	# print result[0][1]
 	app.run(port=5002)
