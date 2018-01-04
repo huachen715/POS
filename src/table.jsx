@@ -52,7 +52,7 @@ class Table extends React.Component {
 					onCancel={this.handleCloseModal}
 					footer={null}
 				>
-					<Login handler={this.handler} />
+					<Login handler={this.handler} table_number={this.props.number} />
 				</Modal>
 			</div>
 		);
@@ -60,6 +60,7 @@ class Table extends React.Component {
 }
 
 Table.propTypes = {
+	number: PropTypes.number.isRequired,
 	name: PropTypes.string.isRequired,
 	width: PropTypes.number.isRequired,
 	height: PropTypes.number.isRequired,

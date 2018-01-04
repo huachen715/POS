@@ -183,6 +183,7 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = {
+	table_number: PropTypes.number.isRequired,
 	isOpen: PropTypes.bool.isRequired
 }
 

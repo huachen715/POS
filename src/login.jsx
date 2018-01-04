@@ -102,13 +102,14 @@ class Login extends React.Component {
 						</Row>
 					</Col>
 				</Row>
-				<Menu isOpen={this.state.openMenu}/>
+				<Menu isOpen={this.state.openMenu} table_number={this.props.table_number} />
 			</div>
 		);
 	}
 }
 
 Login.propTypes = {
+	table_number: PropTypes.number.isRequired,
 	handler: PropTypes.func.isRequired
 }
 
