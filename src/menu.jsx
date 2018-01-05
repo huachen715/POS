@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, message, Table, Layout, Button, Row, Col, Menu as SideBar} from 'antd';
 import Modal from 'react-modal';
+import Login from './login'
 import 'antd/dist/antd.css';
 import {
   BrowserRouter as Router,
@@ -24,6 +25,7 @@ class Menu extends React.Component {
 			sent_items: [],
 			total: 0.00,
 			force_delete: false,
+			activate_login: false,
 		};
 		this.handleClose = this.handleClose.bind(this);
 		this.addItem = this.addItem.bind(this);
@@ -32,6 +34,8 @@ class Menu extends React.Component {
 		this.submitOrder = this.submitOrder.bind(this);
 		this.enable_delete = this.enable_delete.bind(this);
 		this.checkOut = this.checkOut.bind(this);
+		this.handler = this.handler.bind(this);
+		this.invoke_login = this.invoke_login.bind(this);
 	}
 
 	componentDidMount() {
@@ -120,8 +124,21 @@ class Menu extends React.Component {
 		}
 	}
 
-	enable_delete(checked) {
-		this.setState({ force_delete: checked });
+	invoke_login(checked) {
+		if(checked) {
+			this.setState({ activate_login: true });
+		}
+		else {
+			this.setState({ force_delete: checked });
+		}
+	}
+
+	handler() {
+		this.setState({ activate_login: false });
+	}
+
+	enable_delete() {
+		this.setState({ force_delete: true });
 	}
 
 	failed_to_check() {
@@ -264,9 +281,10 @@ class Menu extends React.Component {
 								<p>Total: ${(this.state.total * 1.06).toFixed(2)}</p>
 								<Button type='primary' onClick={this.checkOut}>Check Out</Button>
 								<Button type='primary' onClick={this.submitOrder}>Submit</Button>
-								Force Delete<Switch onChange={this.enable_delete}/>
+								Force Delete<Switch checked={this.state.force_delete} onChange={this.invoke_login}/>
 							</Sider>
 					</Layout>
+					<Login url="http://localhost:5002/validate_delete" handler={this.handler} onSuccess={this.enable_delete} activate={this.state.activate_login}/>
 				</Modal>
 			</div>
 		);

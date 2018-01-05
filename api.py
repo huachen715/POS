@@ -12,8 +12,8 @@ order = {}
 
 login = {}
 
-@app.route('/validate', methods=['POST'])
-def validate():
+@app.route('/validate_table_login', methods=['POST'])
+def validate_table_login():
 	request_data = request.get_json(force=True)
 	conn = db_connect.connect()
 	query = conn.execute("select distinct password from employee_info")
@@ -36,6 +36,15 @@ def validate():
 	# wrong password
 	else:
 		print 'wrong password'
+		return "", 401, {'Access-Control-Allow-Origin': '*'}
+
+@app.route('/validate_delete', methods=['POST'])
+def validate_delete():
+	request_data = request.get_json(force=True)
+	print request_data['password']
+	if request_data['password'] == '8888':
+		return "", 200, {'Access-Control-Allow-Origin': '*'}
+	else:
 		return "", 401, {'Access-Control-Allow-Origin': '*'}
 
 

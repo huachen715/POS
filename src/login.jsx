@@ -47,7 +47,7 @@ class Login extends React.Component {
 			password: this.state.displayValue,
 			table_number: this.props.table_number
 		};
-		fetch("http://localhost:5002/validate", {
+		fetch(this.props.url, {
 			method: 'POST',
 			body: JSON.stringify(message),
 			credentials: 'same-origin',
@@ -125,6 +125,7 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
+	url: PropTypes.string.isRequired,
 	activate: PropTypes.bool.isRequired,
 	table_number: PropTypes.number,
 	handler: PropTypes.func,
