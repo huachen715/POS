@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Login from './login';
 import { Modal, Button, Col } from 'antd';
+import Menu from './menu';
 import 'antd/dist/antd.css';
 
 class Table extends React.Component {
@@ -9,25 +10,28 @@ class Table extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			activate: false
+			activate: false,
+			openMenu: false,
 		};
 
 		this.handleOpenModal = this.handleOpenModal.bind(this);
-		this.handleCloseModal = this.handleCloseModal.bind(this);
 		this.handler = this.handler.bind(this);
+		this.openMenu = this.openMenu.bind(this);
 	}
 
 	handleOpenModal () {
 		this.setState({ activate: true });
 	}
 
-	handleCloseModal () {
+	handler(e) {
+		// e.preventDefault();
 		this.setState({ activate: false });
 	}
 
-	handler(e) {
-		// e.preventDefault();
-		this.setState( {activate: false });
+	openMenu() {
+		this.setState({ openMenu: true });
+		// work round
+		this.setState({ openMenu: false });
 	}
 
 	render() {
@@ -43,17 +47,12 @@ class Table extends React.Component {
 			color: "black",
 			backgroundColor: "red"
 		};
+
 		return (
 			<div>
 				<Button type="primary" onClick={this.handleOpenModal} icon="laptop" style={button_styles}>Table 1</Button>
-				<Modal
-					title="Please enter your password."
-					visible={this.state.activate}
-					onCancel={this.handleCloseModal}
-					footer={null}
-				>
-					<Login handler={this.handler} table_number={this.props.number} />
-				</Modal>
+				<Login handler={this.handler} table_number={this.props.number} activate={this.state.activate} onSuccess={this.openMenu}/>
+				<Menu isOpen={this.state.openMenu} table_number={this.props.number} />
 			</div>
 		);
 	}
