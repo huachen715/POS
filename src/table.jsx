@@ -50,7 +50,7 @@ class Table extends React.Component {
 
 		return (
 			<div>
-				<Button type="primary" onClick={this.handleOpenModal} icon="laptop" style={button_styles}>Table 1</Button>
+				<Button type="primary" onClick={this.handleOpenModal} icon="laptop" style={button_styles}>{this.props.name}</Button>
 				<Login url="http://localhost:5002/validate_table_login" handler={this.handler} table_number={this.props.number} activate={this.state.activate} onSuccess={this.openMenu}/>
 				<Menu isOpen={this.state.openMenu} table_number={this.props.number} />
 			</div>
