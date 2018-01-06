@@ -18,7 +18,7 @@ ReactDom.render(
 		<Router>
 			<div>
 				<Layout>
-					<Sider>
+					<Sider style={{height: 830}}>
 						<Menu theme='dark' mode='inline'>
 							<SubMenu title={<span><Icon type="coffee" /><span>Dine in</span></span>}>
 								<Menu.Item><Link to='/order'> Sushi Bar </Link></Menu.Item>
@@ -32,6 +32,7 @@ ReactDom.render(
 							<SubMenu title={<span><Icon type="idcard" /><span>Employee Manage</span></span>}>
 								<Menu.Item><Link to='/register'> Registration </Link></Menu.Item>
 								<Menu.Item>Modify</Menu.Item>
+								<Menu.Item>View</Menu.Item>
 							</SubMenu>
 							<SubMenu title={<span><Icon type="clock-circle-o" /><span>Punctuation</span></span>}>
 								<Menu.Item>Clock in/out</Menu.Item>
@@ -51,7 +52,7 @@ ReactDom.render(
 							<Menu.Item><Icon type="logout"/>Exit</Menu.Item>
 						</Menu>
 					</Sider>
-					<Content>
+					<Content  style={{ margin: '30px 30px 0', overflow: 'initial' }}>
 						<div>
 							<Route path="/order" component={Order}/>
 							<Route path="/register" component={Register}/>
