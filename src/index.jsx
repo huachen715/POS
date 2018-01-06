@@ -11,7 +11,9 @@ const SubMenu = Menu.SubMenu;
 const { Content, Sider } = Layout;
 
 import Order from './order';
-import Register from './register';
+import Register from './employee/register';
+import ViewEmployee from './employee/view';
+import Exit from './exit';
 
 ReactDom.render(
 	<div>
@@ -32,7 +34,7 @@ ReactDom.render(
 							<SubMenu title={<span><Icon type="idcard" /><span>Employee Manage</span></span>}>
 								<Menu.Item><Link to='/register'> Registration </Link></Menu.Item>
 								<Menu.Item>Modify</Menu.Item>
-								<Menu.Item>View</Menu.Item>
+								<Menu.Item><Link to='/viewEmployee'>View</Link></Menu.Item>
 							</SubMenu>
 							<SubMenu title={<span><Icon type="clock-circle-o" /><span>Punctuation</span></span>}>
 								<Menu.Item>Clock in/out</Menu.Item>
@@ -49,13 +51,15 @@ ReactDom.render(
 								<Menu.Item>Overall Sales</Menu.Item>
 								<Menu.Item>Carry out Sales</Menu.Item>
 							</SubMenu>
-							<Menu.Item><Icon type="logout"/>Exit</Menu.Item>
+							<Menu.Item><Link to='/exit'><Icon type="logout"/>Exit</Link></Menu.Item>
 						</Menu>
 					</Sider>
 					<Content  style={{ margin: '30px 30px 0', overflow: 'initial' }}>
 						<div>
 							<Route path="/order" component={Order}/>
 							<Route path="/register" component={Register}/>
+							<Route path="/viewEmployee" component={ViewEmployee}/>
+							<Route path="/exit" component={Exit}/>
 						</div>
 					</Content>
 				</Layout>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { DatePicker, Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 const FormItem = Form.Item;
 
 class RegistrationForm extends React.Component {
@@ -12,6 +12,7 @@ class RegistrationForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        values.dob = values.dob.format('YYYY-MM-DD');
         console.log('Received values of form: ', values);
       }
     });
@@ -141,6 +142,14 @@ class RegistrationForm extends React.Component {
             rules: [{ required: true, message: 'Please input your SSN!' }],
           })(
             <Input style={{ width: 400 }} />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="DOB"
+        >
+          {getFieldDecorator('dob')(
+            <DatePicker />
           )}
         </FormItem>
         <FormItem {...tailFormItemLayout}>

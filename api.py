@@ -71,6 +71,16 @@ def check():
 	print request_data['order']
 	return "", 200, {'Access-Control-Allow-Origin': '*'}
 
+@app.route('/employee', methods=['GET'])
+def get_employee():
+	conn = db_connect.connect()
+	query = conn.execute('select * from employee_info')
+	result = query.cursor.fetchall()
+	final_res = []
+	for element in result:
+		final_res.append({'first_name': element[0], 'last_name': element[1], 'dob': element[2], 'ssn': element[3], 'password': element[4]})
+	return jsonify(final_res), 200, {'Access-Control-Allow-Origin': '*'}
+
 
 if __name__ == '__main__':
     app.run(port=5002)
