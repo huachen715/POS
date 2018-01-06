@@ -12,7 +12,7 @@ const { Content, Sider } = Layout;
 
 import Order from './order';
 import Register from './employee/register';
-import ViewEmployee from './employee/view';
+import View from './employee/view';
 import Exit from './exit';
 
 ReactDom.render(
@@ -54,11 +54,11 @@ ReactDom.render(
 							<Menu.Item><Link to='/exit'><Icon type="logout"/>Exit</Link></Menu.Item>
 						</Menu>
 					</Sider>
-					<Content  style={{ margin: '30px 30px 0', overflow: 'initial' }}>
+					<Content>
 						<div>
 							<Route path="/order" component={Order}/>
 							<Route path="/register" component={Register}/>
-							<Route path="/viewEmployee" component={ViewEmployee}/>
+							<Route path="/viewEmployee" component={View}/>
 							<Route path="/exit" component={Exit}/>
 						</div>
 					</Content>
