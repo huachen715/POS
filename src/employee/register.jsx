@@ -79,7 +79,7 @@ class RegistrationForm extends React.Component {
               required: true, message: 'Please input your E-mail!',
             }],
           })(
-            <Input style={{width: 400}}/>
+            <Input style={{width: 300}}/>
           )}
         </FormItem>
         <FormItem
@@ -93,7 +93,7 @@ class RegistrationForm extends React.Component {
               required: true, message: 'Please input your E-mail!',
             }],
           })(
-            <Input style={{width: 400}}/>
+            <Input style={{width: 300}}/>
           )}
         </FormItem>
         <FormItem
@@ -107,7 +107,7 @@ class RegistrationForm extends React.Component {
               validator: this.checkConfirm,
             }],
           })(
-            <Input type="password" style={{width: 400}}/>
+            <Input type="password" style={{width: 300}}/>
           )}
         </FormItem>
         <FormItem
@@ -121,7 +121,7 @@ class RegistrationForm extends React.Component {
               validator: this.checkPassword,
             }],
           })(
-            <Input type="password" onBlur={this.handleConfirmBlur} style={{width: 400}}/>
+            <Input type="password" onBlur={this.handleConfirmBlur} style={{width: 300}}/>
           )}
         </FormItem>
         <FormItem
@@ -131,7 +131,7 @@ class RegistrationForm extends React.Component {
           {getFieldDecorator('phone', {
             rules: [{ required: true, message: 'Please input your phone number!' }],
           })(
-            <Input style={{ width: 400 }} />
+            <Input style={{ width: 300 }} />
           )}
         </FormItem>
         <FormItem
@@ -141,7 +141,7 @@ class RegistrationForm extends React.Component {
           {getFieldDecorator('ssn', {
             rules: [{ required: true, message: 'Please input your SSN!' }],
           })(
-            <Input style={{ width: 400 }} />
+            <Input style={{ width: 300 }} />
           )}
         </FormItem>
         <FormItem

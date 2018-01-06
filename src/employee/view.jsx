@@ -1,12 +1,14 @@
 import React from 'react';
-import { Table } from 'antd';
+import { List, Button, Modal } from 'antd';
 import 'antd/dist/antd.css';
+import Edit from './register';
 
 class View extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			info: []
+			info: [],
+			openEdit: false
 		};
 	}
 
@@ -23,71 +25,39 @@ class View extends React.Component {
 		.catch(error => console.log(error));
 	}
 
+	handleEdit = () => {
+		this.setState({ openEdit: true });
+	}
+
+	handleCancel = () => {
+		this.setState({ openEdit: false });
+	}
+
 	render() {
-		// const column = [{
-		// 	title: 'First Name',
-		// 	dataIndex: 'first_name',
-		// 	key: 'first_name',
-		// },{
-		// 	title: 'Last Name',
-		// 	dataIndex: 'last_name',
-		// 	key: 'last_name',
-		// },{
-		// 	title: 'Date of Birth',
-		// 	dataIndex: 'dob',
-		// 	key: 'dob',
-		// },{
-		// 	title: 'SSN',
-		// 	dataIndex: 'ssn',
-		// 	key: 'ssn',
-		// }]
-
-		// // console.log(this.state.info);
-		// const render_data = this.state.info.map((row, index) => ({
-		// 	dob: row.dob,
-		// 	first_name: row.first_name,
-		// 	last_name: row.last_name,
-		// 	key: index,
-		// 	ssn: row.ssn
-		// }));
-		const columns = [{
-  title: 'Name',
-  dataIndex: 'name',
-  key: 'name',
-  render: text => <a href="#">{text}</a>,
-}, {
-  title: 'Age',
-  dataIndex: 'age',
-  key: 'age',
-}, {
-  title: 'Address',
-  dataIndex: 'address',
-  key: 'address',
-}];
-
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  age: 32,
-  address: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  name: 'Jim Green',
-  age: 42,
-  address: 'London No. 1 Lake Park',
-}, {
-  key: '3',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-}];
-
-
-		// console.log(render_data);
 
 		return(
-			<div>
-				<Table column={columns} dataSource={data} />
+			<div style={{margin: 'auto', width: 500}}>
+				<List
+				    itemLayout="horizontal"
+				    dataSource={this.state.info}
+				    renderItem={item => (
+				      <List.Item>
+				        <List.Item.Meta
+				          title={`${item.first_name} ${item.last_name}`}
+				          description={item.dob}
+				        />
+				        <Button type='primary' onClick={this.handleEdit}>Edit</Button>
+				      </List.Item>
+				    )}
+				/>
+				<Modal
+		          title="Edit profile"
+		          visible={this.state.openEdit}
+		          onCancel={this.handleCancel}
+		          footer={<Button type="primary" onClick={this.handleCancel}>Cancel</Button>}
+		        >
+		        	<Edit />
+		        </Modal>
 			</div>
 		);
 	}

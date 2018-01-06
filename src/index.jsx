@@ -33,7 +33,6 @@ ReactDom.render(
 							<Menu.Item><Icon type="user"/>Reservation</Menu.Item>
 							<SubMenu title={<span><Icon type="idcard" /><span>Employee Manage</span></span>}>
 								<Menu.Item><Link to='/register'> Registration </Link></Menu.Item>
-								<Menu.Item>Modify</Menu.Item>
 								<Menu.Item><Link to='/viewEmployee'>View</Link></Menu.Item>
 							</SubMenu>
 							<SubMenu title={<span><Icon type="clock-circle-o" /><span>Punctuation</span></span>}>
