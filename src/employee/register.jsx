@@ -13,10 +13,19 @@ class RegistrationForm extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         values.dob = values.dob.format('YYYY-MM-DD');
-        console.log('Received values of form: ', values);
+        fetch('http://localhost:5002/modify_employee', {
+          method: 'POST',
+          body: JSON.stringify(values),
+          credentials: 'same-origin',
+        }).then((response) => {
+          if(!response.ok) {
+            throw Error(response.statusText);
+          }
+        }).catch(error => {console.log(error)});
       }
     });
   }
+
   handleConfirmBlur = (e) => {
     const value = e.target.value;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
@@ -72,11 +81,23 @@ class RegistrationForm extends React.Component {
       <Form onSubmit={this.handleSubmit}>
         <FormItem
           {...formItemLayout}
-          label="Name"
+          label="First Name"
         >
-          {getFieldDecorator('name', {
+          {getFieldDecorator('first_name', {
             rules: [{
-              required: true, message: 'Please input your E-mail!',
+              required: true, message: 'Please input your first name!',
+            }],
+          })(
+            <Input style={{width: 300}}/>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Last Name"
+        >
+          {getFieldDecorator('last_name', {
+            rules: [{
+              required: true, message: 'Please input your last name!',
             }],
           })(
             <Input style={{width: 300}}/>
