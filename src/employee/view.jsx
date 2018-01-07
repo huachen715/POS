@@ -8,7 +8,8 @@ class View extends React.Component {
 		super(props);
 		this.state = {
 			info: [],
-			openEdit: false
+			openEdit: false,
+			current_value: {}
 		};
 	}
 
@@ -25,7 +26,8 @@ class View extends React.Component {
 		.catch(error => console.log(error));
 	}
 
-	handleEdit = () => {
+	handleEdit = (item) => {
+		this.setState({ current_value: item });
 		this.setState({ openEdit: true });
 	}
 
@@ -46,7 +48,7 @@ class View extends React.Component {
 				          title={`${item.first_name} ${item.last_name}`}
 				          description={item.dob}
 				        />
-				        <Button type='primary' onClick={this.handleEdit}>Edit</Button>
+				        <Button type='primary' onClick={() => this.handleEdit(item)}>Edit</Button>
 				      </List.Item>
 				    )}
 				/>
@@ -56,11 +58,13 @@ class View extends React.Component {
 		          onCancel={this.handleCancel}
 		          footer={<Button type="primary" onClick={this.handleCancel}>Cancel</Button>}
 		        >
-		        	<Edit />
+		        	<Edit button_name="register" default_value={this.state.current_value}/>
 		        </Modal>
 			</div>
 		);
 	}
 }
+
+
 
 export default View;

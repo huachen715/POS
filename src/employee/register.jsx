@@ -1,5 +1,6 @@
 import React from 'react';
-import { DatePicker, Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import PropTypes from 'prop-types';
+import { DatePicker, Form, Input, Row, Col, Button } from 'antd';
 const FormItem = Form.Item;
 
 class RegistrationForm extends React.Component {
@@ -87,8 +88,9 @@ class RegistrationForm extends React.Component {
             rules: [{
               required: true, message: 'Please input your first name!',
             }],
+            initialValue: this.props.default_value.first_name,
           })(
-            <Input style={{width: 300}}/>
+            <Input style={{width: 300}} />
           )}
         </FormItem>
         <FormItem
@@ -99,8 +101,9 @@ class RegistrationForm extends React.Component {
             rules: [{
               required: true, message: 'Please input your last name!',
             }],
+            initialValue: this.props.default_value.last_name,
           })(
-            <Input style={{width: 300}}/>
+            <Input style={{width: 300}} />
           )}
         </FormItem>
         <FormItem
@@ -114,7 +117,7 @@ class RegistrationForm extends React.Component {
               required: true, message: 'Please input your E-mail!',
             }],
           })(
-            <Input style={{width: 300}}/>
+            <Input style={{width: 300}} />
           )}
         </FormItem>
         <FormItem
@@ -127,8 +130,9 @@ class RegistrationForm extends React.Component {
             }, {
               validator: this.checkConfirm,
             }],
+            initialValue: this.props.default_value.password,
           })(
-            <Input type="password" style={{width: 300}}/>
+            <Input type="password" style={{width: 300}} />
           )}
         </FormItem>
         <FormItem
@@ -141,8 +145,9 @@ class RegistrationForm extends React.Component {
             }, {
               validator: this.checkPassword,
             }],
+            initialValue: this.props.default_value.password,
           })(
-            <Input type="password" onBlur={this.handleConfirmBlur} style={{width: 300}}/>
+            <Input type="password" onBlur={this.handleConfirmBlur} style={{width: 300}} />
           )}
         </FormItem>
         <FormItem
@@ -161,6 +166,7 @@ class RegistrationForm extends React.Component {
         >
           {getFieldDecorator('ssn', {
             rules: [{ required: true, message: 'Please input your SSN!' }],
+            initialValue: this.props.default_value.ssn,
           })(
             <Input style={{ width: 300 }} />
           )}
@@ -174,11 +180,16 @@ class RegistrationForm extends React.Component {
           )}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">Register</Button>
+          <Button type="primary" htmlType="submit">{this.props.button_name}</Button>
         </FormItem>
       </Form>
     );
   }
+}
+
+RegistrationForm.propTypes = {
+  default_value: PropTypes.object,
+  button_name: PropTypes.string.isRequired
 }
 
 const WrappedRegistrationForm = Form.create()(RegistrationForm);
