@@ -23,6 +23,7 @@ class RegistrationForm extends React.Component {
             throw Error(response.statusText);
           }
         }).catch(error => {console.log(error)});
+        // console.log(values);
       }
     });
   }
@@ -80,6 +81,13 @@ class RegistrationForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        <FormItem
+        >
+          {getFieldDecorator('key', {
+            initialValue: this.props.default_value.password,
+          })
+          }
+        </FormItem>
         <FormItem
           {...formItemLayout}
           label="First Name"

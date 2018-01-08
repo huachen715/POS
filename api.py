@@ -81,7 +81,7 @@ def get_employee():
 		final_res.append({'first_name': element[0], 'last_name': element[1], 'dob': element[2], 'ssn': element[3], 'password': element[4]})
 	return jsonify(final_res), 200, {'Access-Control-Allow-Origin': '*'}
 
-@app.route('/modify_employee', methods=['POST', 'PUT'])
+@app.route('/modify_employee', methods=['POST', 'PUT', 'DELETE'])
 def modify_employee():
 	conn = db_connect.connect()
 	if request.method == 'POST':
@@ -89,6 +89,14 @@ def modify_employee():
 		query = conn.execute('insert into employee_info(first_name, last_name, DOB, SSN, PASSWORD) values (?,?,?,?,?)', (
 			request_data['first_name'], request_data['last_name'], request_data['dob'], request_data['ssn'], request_data['password']))
 		return "", 200, {'Access-Control-Allow-Origin': '*'}
+
+@app.route('/delete_employee', methods=['POST'])
+def delete_employee():
+	conn = db_connect.connect()
+	request_data = request.get_json(force=True)
+	conn.execute('delete from employee_info where password = ?', request_data['password'])
+	return "", 200, {'Access-Control-Allow-Origin': '*'}
+
 
 
 if __name__ == '__main__':

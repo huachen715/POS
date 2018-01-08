@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Button, Modal } from 'antd';
+import { List, Button, Modal, Divider, Card } from 'antd';
 import 'antd/dist/antd.css';
 import Edit from './register';
 
@@ -20,7 +20,7 @@ class View extends React.Component {
 			return response.json();
 		})
 		.then((data) => {
-			console.log(data);
+			// console.log(data);
 			this.setState({ info: data });
 		})
 		.catch(error => console.log(error));
@@ -35,10 +35,28 @@ class View extends React.Component {
 		this.setState({ openEdit: false });
 	}
 
+	delete_arr = (arr, key) => {
+		return arr.filter(e => e.password !== key);
+	}
+
+	handleDelete = (item) => {
+		// let message = {password: item.password};
+		fetch('http://localhost:5002/delete_employee', {
+          method: 'POST',
+          body: JSON.stringify({password: item.password}),
+          credentials: 'same-origin',
+        }).then((response) => {
+          if(!response.ok) {
+            throw Error(response.statusText);
+          }
+        }).catch(error => {console.log(error)});
+        this.setState({ info: this.delete_arr(this.state.info, item.password) });
+	}
+
 	render() {
 
 		return(
-			<div style={{margin: 'auto', width: 500}}>
+			<div style={{margin: 'auto', width: 600}}>
 				<List
 				    itemLayout="horizontal"
 				    dataSource={this.state.info}
@@ -46,9 +64,17 @@ class View extends React.Component {
 				      <List.Item>
 				        <List.Item.Meta
 				          title={`${item.first_name} ${item.last_name}`}
-				          description={item.dob}
+				          description={
+				          	<div>
+				          		Date of Birth: {item.dob}<br />
+				          		Password: {item.password}<br />
+				          		SSN: {item.ssn}
+				          	</div>
+				          }
 				        />
 				        <Button type='primary' onClick={() => this.handleEdit(item)}>Edit</Button>
+				        <Divider type="vertical" />
+				        <Button type='danger' onClick={() => this.handleDelete(item)}>Delete</Button>
 				      </List.Item>
 				    )}
 				/>
