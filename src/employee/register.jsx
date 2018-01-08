@@ -22,6 +22,11 @@ class RegistrationForm extends React.Component {
           if(!response.ok) {
             throw Error(response.statusText);
           }
+          else{
+            console.log('called');
+            this.props.handler();
+            this.props.update();
+          }
         }).catch(error => {console.log(error)});
         // console.log(values);
       }
@@ -188,7 +193,7 @@ class RegistrationForm extends React.Component {
           )}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">{this.props.button_name}</Button>
+          <Button type="primary" htmlType="submit">Confirm</Button>
         </FormItem>
       </Form>
     );
@@ -197,7 +202,8 @@ class RegistrationForm extends React.Component {
 
 RegistrationForm.propTypes = {
   default_value: PropTypes.object,
-  button_name: PropTypes.string.isRequired
+  handler: PropTypes.func,
+  update: PropTypes.func,
 }
 
 const WrappedRegistrationForm = Form.create()(RegistrationForm);

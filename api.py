@@ -81,13 +81,17 @@ def get_employee():
 		final_res.append({'first_name': element[0], 'last_name': element[1], 'dob': element[2], 'ssn': element[3], 'password': element[4]})
 	return jsonify(final_res), 200, {'Access-Control-Allow-Origin': '*'}
 
-@app.route('/modify_employee', methods=['POST', 'PUT', 'DELETE'])
+@app.route('/modify_employee', methods=['POST'])
 def modify_employee():
 	conn = db_connect.connect()
 	if request.method == 'POST':
 		request_data = request.get_json(force=True)
-		query = conn.execute('insert into employee_info(first_name, last_name, DOB, SSN, PASSWORD) values (?,?,?,?,?)', (
-			request_data['first_name'], request_data['last_name'], request_data['dob'], request_data['ssn'], request_data['password']))
+		if 'key' not in request_data:
+			query = conn.execute('insert into employee_info(first_name, last_name, DOB, SSN, PASSWORD) values (?,?,?,?,?)', (
+				request_data['first_name'], request_data['last_name'], request_data['dob'], request_data['ssn'], request_data['password']))
+		else:
+			conn.execute('update employee_info set first_name = ?, last_name = ?, DOB = ?, SSN = ?, PASSWORD = ? where password = ?', (
+				request_data['first_name'], request_data['last_name'], request_data['dob'], request_data['ssn'], request_data['password'], request_data['key']))
 		return "", 200, {'Access-Control-Allow-Origin': '*'}
 
 @app.route('/delete_employee', methods=['POST'])
