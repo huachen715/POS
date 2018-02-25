@@ -32,10 +32,6 @@ module.exports = {
         test: /node_modules\/.+\.css$/,
         use: ['style-loader', 'css-loader'],
       },
-   //    {
-	  //   test: /\.css$/,
-	  //   loader: 'style-loader!css-loader'
-	  // },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,

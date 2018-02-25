@@ -52,17 +52,26 @@ def validate_delete():
 def menu():
 	if request.method == 'GET':
 		conn = db_connect.connect()
-		query = conn.execute("select * from menu")
+		query = conn.execute("select * from menu order by name")
 		result = query.cursor.fetchall()
 		final_res = defaultdict(list)
 		for element in result:
 			final_res[element[1]].append({'name': element[0], 'price': element[2]})
 		return jsonify(**final_res), 200, {'Access-Control-Allow-Origin': '*'}
-	else:
+	elif request.method == 'POST':
 		request_data = request.get_json(force=True)
 		order[request_data['table_number']] = request_data['order']
 		print request.get_json(force=True)
-		return "", 200, {'Access-Control-Allow-Origin': '*'}
+		return "", 204, {'Access-Control-Allow-Origin': '*'}
+
+@app.route('/delete_menu', methods=['GET', 'POST'])
+def delete_menu():
+	if request.method == 'POST':
+		request_data = request.get_json(force=True)
+		conn = db_connect.connect()
+		print request_data
+		query = conn.execute("delete from menu where name=?", request_data)
+		return "", 204, {'Access-Control-Allow-Origin': '*'}
 
 @app.route('/check', methods=['POST'])
 def check():
@@ -100,7 +109,6 @@ def delete_employee():
 	request_data = request.get_json(force=True)
 	conn.execute('delete from employee_info where password = ?', request_data['password'])
 	return "", 200, {'Access-Control-Allow-Origin': '*'}
-
 
 
 if __name__ == '__main__':

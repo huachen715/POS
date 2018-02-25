@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, message, Table, Layout, Button, Row, Col, Menu as SideBar} from 'antd';
+import { InputNumber, Switch, message, Table, Layout, Button, Row, Col, Menu as SideBar} from 'antd';
 import Modal from 'react-modal';
 import Login from './login'
 import 'antd/dist/antd.css';
@@ -9,6 +9,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+
 const { SubMenu } = SideBar;
 
 
@@ -26,8 +27,10 @@ class Menu extends React.Component {
 			total: 0.00,
 			force_delete: false,
 			activate_login: false,
+			activate_qty: false,
 		};
 		this.handleClose = this.handleClose.bind(this);
+		this.addQty = this.addQty.bind(this);
 		this.addItem = this.addItem.bind(this);
 		this.remove = this.remove.bind(this);
 		this.cancelOne = this.cancelOne.bind(this);
@@ -65,6 +68,14 @@ class Menu extends React.Component {
 		this.setState({ ordered_items: this.state.ordered_items.concat(item) });
 	}
 
+	addQty(item) {
+		console.log(this.state.ordered_items[item].quality);
+		this.state.ordered_items[item].quality += 1;
+		// console.log(this.state.ordered_items[item].quality)	
+		this.forceUpdate();
+		// this.setState({ ordered_items[item].quality: this.state.ordered_items[item].quality + 1});
+	}
+
 	failed_to_send() {
 		return message.error('Failed To Send Order.')
 	}
@@ -93,7 +104,6 @@ class Menu extends React.Component {
 		let target = 0;
 		if (this.state.force_delete) {
 			for(let i = 0; i < this.state.sent_items.length; ++i) {
-
 				if(index === this.state.sent_items[i].key) {
 					target = i;
 					break;
@@ -195,7 +205,7 @@ class Menu extends React.Component {
 				let item_name = this.state.catalog[key][i].name;
 				let item_price = this.state.catalog[key][i].price;
 				let item_index = this.state.ordered_items.length;
-				group.push(<Button type='primary' style={style} onClick={() => this.addItem({name: item_name, price: item_price})}>{item_name}</Button>);
+				group.push(<Button type='primary' style={style} onClick={() => this.addItem({quality: 1,name: item_name, price: item_price})}>{item_name}</Button>);
 			}
 
 			routes.push({
@@ -212,24 +222,30 @@ class Menu extends React.Component {
 			right: 21
 		}
 
-
 		const content_style = {
 			backgroundColor: 'white'
 		}
 
-		const columns = [{
+		const columns = [
+		{
+			title: 'Qty',
+			dataIndex: 'quality',
+		},
+		{
 		  title: 'Name',
 		  dataIndex: 'name',
 		}, {
 		  title: 'Price',
 		  dataIndex: 'price',
 		}, {
-		   title: '',
+		   title: 'Action',
 		   dataIndex: 'action' ,
 		}];
 
 		let table_entry = this.state.sent_items.map((item) => 
-			({
+			({	
+				quality: <InputNumber min={1} defaultValue={item['quality']} />,
+				// quality: <Button onClick={() => this.addQty(item['key'])}> {item['quality']}</Button>,
 				name: item['name'],
 				price: item['price'],
 				action: <Button disabled={!this.state.force_delete} type='danger' onClick={() => this.cancelOne(item['key'])}>Delete</Button>
@@ -238,6 +254,7 @@ class Menu extends React.Component {
 
 		table_entry = table_entry.concat(this.state.ordered_items.map((item) => 
 			({
+				quality: <InputNumber min={1} defaultValue={item['quality']} />,
 				name: item['name'],
 				price: item['price'],
 				action: <Button type='danger' onClick={() => this.cancelOne(item['key'])}>Delete</Button>
@@ -252,37 +269,36 @@ class Menu extends React.Component {
 				>
 				<Button onClick={this.handleClose}>X</Button>
 					<Layout>
-							<Router>	
-							    <div style={{ display: 'flex', backgroundColor: 'white'}}>
-							     <Sider>
-								        <SideBar theme="dark" mode="inline">
-								          {routes.map((item) => (<SideBar.Item><Link to={item.path}>{item.name}</Link></SideBar.Item>)
-								          )}
-								        </SideBar>	      
-							    </Sider>
-							    <Content>
-								      <div style={{ width: 700 }}>
-								        {routes.map((route, index) => (
-								          <Route
-								            key={index}
-								            path={route.path}
-								            exact={route.exact}
-								            component={route.main}
-								          />
-								        ))}
-								      </div>
-							      </Content>
-							    </div>
-							</Router>
-
-							<Sider width={450} style={content_style}>
-								<Table columns={columns} dataSource={table_entry} />
-								<p>Tax: (6%)</p>
-								<p>Total: ${(this.state.total * 1.06).toFixed(2)}</p>
-								<Button type='primary' onClick={this.checkOut}>Check Out</Button>
-								<Button type='primary' onClick={this.submitOrder}>Submit</Button>
-								Force Delete<Switch checked={this.state.force_delete} onChange={this.invoke_login}/>
-							</Sider>
+						<Router>	
+						    <div style={{ display: 'flex', backgroundColor: 'white'}}>
+						     <Sider>
+							        <SideBar theme="dark" mode="inline">
+							          {routes.map((item) => (<SideBar.Item><Link to={item.path}>{item.name}</Link></SideBar.Item>)
+							          )}
+							        </SideBar>	      
+						    </Sider>
+						    <Content>
+							      <div style={{ width: 700 }}>
+							        {routes.map((route, index) => (
+							          <Route
+							            key={index}
+							            path={route.path}
+							            exact={route.exact}
+							            component={route.main}
+							          />
+							        ))}
+							      </div>
+						      </Content>
+						    </div>
+						</Router>
+						<Sider width={450} style={content_style}>
+							<Table columns={columns} dataSource={table_entry} />
+							<p>Tax: (6%)</p>
+							<p>Total: ${(this.state.total * 1.06).toFixed(2)}</p>
+							<Button type='primary' onClick={this.checkOut}>Check Out</Button>
+							<Button type='primary' onClick={this.submitOrder}>Submit</Button>
+							Force Delete<Switch checked={this.state.force_delete} onChange={this.invoke_login}/>
+						</Sider>
 					</Layout>
 					<Login url="http://localhost:5002/validate_delete" handler={this.handler} onSuccess={this.enable_delete} activate={this.state.activate_login}/>
 				</Modal>
