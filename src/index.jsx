@@ -15,6 +15,7 @@ import Register from './employee/register';
 import View from './employee/view';
 import Exit from './exit';
 import Menus from './menus/menus'
+import Sales from './sales'
 
 ReactDom.render(
 	<div>
@@ -43,11 +44,7 @@ ReactDom.render(
 								<Menu.Item>Modify Ticket</Menu.Item>
 								<Menu.Item>Delete Ticket</Menu.Item>
 							</SubMenu>
-							<SubMenu title={<span><Icon type="pay-circle-o" /><span>Sales</span></span>}>
-								<Menu.Item>Employee Sales</Menu.Item>
-								<Menu.Item>Overall Sales</Menu.Item>
-								<Menu.Item>Carry out Sales</Menu.Item>
-							</SubMenu>
+							<Menu.Item><Link to='/viewSales'><Icon type="pay-circle-o" />Sales</Link></Menu.Item>
 							<Menu.Item><Link to='/viewMenus'><Icon type="book" />Menu</Link></Menu.Item>
 							<Menu.Item><Link to='/exit'><Icon type="logout"/>Exit</Link></Menu.Item>
 						</Menu>
@@ -57,6 +54,7 @@ ReactDom.render(
 							<Route path="/order" component={Order}/>
 							<Route path="/viewEmployee" component={View} />
 							<Route path="/viewMenus" component={Menus} />
+							<Route path="/viewSales" component={Sales} />
 							<Route path="/exit" component={Exit}/>
 						</div>
 					</Content>

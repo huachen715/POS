@@ -1,0 +1,12 @@
+ticket table {
+	ticket_num,
+	server_id,
+	checkout_time,
+	total
+}
+
+ticket_detail {
+	ticket_num,
+	course_id,
+	qty
+}
